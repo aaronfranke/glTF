@@ -39,6 +39,9 @@
             "allOf": [ { "$ref": "glTFid.schema.json" } ],
             "description": "The index of the mesh in this node."
         },
+        "modelInstance": {
+            "$ref": "node.modelInstance.schema.json"
+        },
         "rotation": {
             "type": "array",
             "description": "The node's unit quaternion rotation in the order (x, y, z, w), where w is the scalar.",

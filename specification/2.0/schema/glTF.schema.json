@@ -99,6 +99,15 @@
             "minItems": 1,
             "gltf_detailedDescription": "An array of meshes.  A mesh is a set of primitives to be rendered."
         },
+        "models": {
+            "type": "array",
+            "description": "An array of models.",
+            "items": {
+                "$ref": "model.schema.json"
+            },
+            "minItems": 1,
+            "gltf_detailedDescription": "An array of models.  A model is a reference to an external glTF asset or other model file that can be instantiated in the scene using a node's `modelInstance` property."
+        },
         "nodes": {
             "type": "array",
             "description": "An array of nodes.",

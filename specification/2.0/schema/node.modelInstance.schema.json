@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "node.modelInstance.schema.json",
+    "title": "glTF Node Model Instance",
+    "type": "object",
+    "description": "A model instance is a reference to a model that is instantiated as this node in the scene hierarchy. If not defined on a node, the node is not an instance of a model.",
+    "allOf": [ { "$ref" : "glTFProperty.schema.json" } ],
+    "properties": {
+        "materialOverrides": {
+            "type": "object",
+            "description": "A map of unique material names to property overrides for materials within the referenced model. Each key is a material name. Only valid material names unique in the file may be targeted. If the model contains no materials with this name, or more than one material with this name, the name MUST NOT be used as a key in the material overrides. The value contains properties that override or extend the corresponding material's properties. When applied, the override properties are merged with the original material properties, and the result MUST be valid according to the material schema.",
+            "additionalProperties": {
+                "$ref": "material.schema.json"
+            }
+        },
+        "model": {
+            "allOf": [ { "$ref": "glTFid.schema.json" } ],
+            "description": "The index of the model that this node references. This is a reference to a model in the glTF file's models array. This property is required for a model instance."
+        },
+        "nodeAdditionalChildren": {
+            "type": "object",
+            "description": "A map of unique node names to arrays of host node indices to append as additional children to those nodes in the model instance. Each key is the name of a node in the referenced model, and each value is an array of glTF node IDs referencing nodes in the host file that will be added as children after the model's own children.",
+            "additionalProperties": {
+                "type": "array",
+                "items": {
+                    "allOf": [ { "$ref": "glTFid.schema.json" } ]
+                }
+            }
+        },
+        "nodeOverrides": {
+            "type": "object",
+            "description": "A map of node names to property overrides for nodes within the referenced model. Each key is a node name. Only valid node names unique in the file may be targeted. If the model contains no node with this name, or more than one node with this name, the name MUST NOT be used as a key in the node overrides. The value contains properties that override or extend the corresponding node's properties. When applied, the override properties are merged with the original node properties, and the result MUST be valid according to the node schema.",
+            "additionalProperties": {
+                "$ref": "node.schema.json"
+            }
+        }
+    },
+    "required": ["model"]
+}
