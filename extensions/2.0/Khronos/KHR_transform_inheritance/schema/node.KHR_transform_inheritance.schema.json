@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "node.KHR_transform_inheritance.schema.json",
+    "title": "KHR_transform_inheritance glTF Node Extension",
+    "type": "object",
+    "description": "Controls whether a node's translation, rotation, and scale follow along with its parent nodes.",
+    "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+    "properties": {
+        "inheritRotation": {
+            "type": "boolean",
+            "description": "If true or not specified, the node's rotation follows along with its parent node, if it has one. If false, the node's rotation is not affected by changes to the transforms of parent glTF nodes, and instead follows along with the glTF scene root.",
+            "default": true
+        },
+        "inheritScale": {
+            "type": "boolean",
+            "description": "If true or not specified, the node's scale follows along with its parent node, if it has one. If false, the node's scale is not affected by the changes to the transforms of parent glTF nodes, and instead follows along with the glTF scene root.",
+            "default": true
+        },
+        "inheritTranslation": {
+            "type": "boolean",
+            "description": "If true or not specified, the node's translation follows along with its parent node, if it has one. If false, the node's translation is not affected by the changes to the transforms of parent glTF nodes, and instead follows along with the glTF scene root.",
+            "default": true
+        }
+    }
+}
