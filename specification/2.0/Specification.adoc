@@ -657,10 +657,12 @@ For property names, glTF usually uses camel case, `likeThis`.
 [[coordinate-system-and-units]]
 == Coordinate System and Units
 
-glTF uses a right-handed coordinate system. glTF defines +Y as up, +Z as forward, and -X as right; the front of a glTF asset faces +Z.
+glTF uses a right-handed coordinate system.
+
+glTF defines +Y as up; the front side of a glTF asset faces +Z, the left side of a glTF asset faces +X.
 
 .glTF Coordinate System Orientation
-image::figures/coordinate-system.png[pdfwidth=2in,align=left]
+image::figures/coordinate-system.svg[pdfwidth=2in,align=left]
 
 The units for all linear distances are meters.
 
