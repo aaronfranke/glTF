@@ -690,6 +690,8 @@ glTF 2.1 assets **MAY** contain zero or more _scenes_, the set of visual objects
 
 An additional root-level property, `scene` (note singular), identifies which of the scenes in the array **SHOULD** be displayed at load time. When `scene` is undefined, client implementations **MAY** delay rendering until a particular scene is requested.
 
+As of glTF 2.1, the ability to define more than one scene is deprecated. The `scenes` array **SHOULD** contain at most one scene, and if the `scene` property is defined, it **SHOULD** be set to `0`. Client implementations **SHOULD** use the `scene` property when importing glTF 2.x assets, and **MUST NOT** generate more than one scene or a `scene` property set to a value other than `0` when exporting glTF 2.1 assets.
+
 A glTF asset that does not contain any scenes **SHOULD** be treated as a library of individual entities such as materials or meshes.
 
 The following example defines a glTF asset with a single scene that contains a single node.
