@@ -1313,7 +1313,7 @@ When a `COLOR_n` attribute uses an accessor of `"VEC3"` type, its alpha componen
 
 All components of each `COLOR_0` accessor element **MUST** be clamped to `[0.0, 1.0]` range.
 
-`TEXCOORD_n`, `COLOR_n`, `JOINTS_n`, and `WEIGHTS_n` attribute semantic property names **MUST** be of the form `[semantic]_[set_index]`, e.g., `TEXCOORD_0`, `TEXCOORD_1`, `COLOR_0`. All indices for indexed attribute semantics **MUST** start with 0 and be consecutive positive integers: `TEXCOORD_0`, `TEXCOORD_1`, etc. Indices **MUST NOT** use leading zeroes to pad the number of digits (e.g., `TEXCOORD_01` is not allowed).
+`TEXCOORD_n`, `COLOR_n`, `JOINTS_n`, and `WEIGHTS_n` attribute semantic property names **MUST** be of the form `[semantic]_[set_index]`, e.g., `TEXCOORD_0`, `TEXCOORD_1`, `COLOR_0`. Indices for indexed attribute semantics **SHOULD** start with 0 and be consecutive positive integers: `TEXCOORD_0`, `TEXCOORD_1`, etc. Indices **MUST NOT** use leading zeroes to pad the number of digits (e.g., `TEXCOORD_01` is not allowed). `TEXCOORD_0` **SHOULD** be used for the primary texture coordinate set (usually the one used for the albedo texture, if any).
 
 Client implementations **SHOULD** support at least two texture coordinate sets, one vertex color, and one joints/weights set.
 
