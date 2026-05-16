@@ -2647,6 +2647,19 @@ All glTF extensions required to load and/or render an asset **MUST** be listed i
 `extensionsRequired` is a subset of `extensionsUsed`. All values in `extensionsRequired` **MUST** also exist in `extensionsUsed`.
 
 
+[[required-extensions]]
+=== Required Extensions
+
+The following extensions were optional in previous glTF versions, but are now required in glTF 2.1:
+
+- EXT_texture_webp: https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Vendor/EXT_texture_webp
+- KHR_materials_emissive_strength: https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength
+- KHR_mesh_quantization: https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_mesh_quantization
+- KHR_node_visibility: https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+
+glTF implementations **MUST** support these extensions in order to be compliant with glTF 2.1.
+
+
 [[glb-file-format-specification]]
 = GLB File Format Specification
 
