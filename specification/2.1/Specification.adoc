@@ -2682,7 +2682,7 @@ A Binary glTF asset can still refer to external resources. For example, an appli
 
 A Binary glTF (which can be a file, for example) has the following structure:
 
-* A 12-byte preamble, called the _header_.
+* A 12-byte (binary format version 2) or 16-byte (binary format version 3) preamble, called the _header_.
 * One or more _chunks_ that contain JSON content and binary data.
 
 The _chunk_ containing JSON **MAY** refer to external resources as usual, and **MAY** also reference resources stored within other _chunks_.
@@ -2700,10 +2700,15 @@ The registered media type is `model/gltf-binary`.
 [[binary-gltf-layout-overview]]
 === Overview
 
-Binary glTF is little endian. The figure below shows an example of a Binary glTF asset.
+Binary glTF is little endian. The figure below shows an example of the binary format version 2 layout:
 
-.Binary glTF Layout
+.Binary glTF version 2 Layout
 image::figures/glb2.svg[pdfwidth=6in,align=left]
+
+The figure below shows an example of the binary format version 3 layout:
+
+.Binary glTF version 3 Layout
+image::figures/glb3.svg[pdfwidth=7in,align=left]
 
 The following sections describe the structure more in detail.
 
@@ -2711,7 +2716,9 @@ The following sections describe the structure more in detail.
 [[binary-header]]
 === Header
 
-The 12-byte header consists of three 4-byte entries:
+The file header consists of three entries, of different sizes depending on the binary format version.
+
+For binary format version 2, the 12-byte header consists of three 4-byte entries:
 
 [source,c]
 ----
@@ -2720,11 +2727,20 @@ uint32 version
 uint32 length
 ----
 
+For binary format version 3, the 16-byte header consists of two 4-byte entries and one 8-byte entry:
+
+[source,c]
+----
+uint32 magic
+uint32 version
+uint64 length
+----
+
 * `magic` **MUST** be equal to equal `0x46546C67`. It is ASCII string `glTF` and can be used to identify data as Binary glTF.
-* `version` indicates the version of the Binary glTF container format. This specification defines version 2.
+* `version` indicates the version of the Binary glTF container format. The glTF 2.1 specification defines version 2 and version 3.
 +
 Client implementations that load GLB format **MUST** also check for the <<asset,asset version properties>> in the JSON chunk, as the version specified in the GLB header only refers to the GLB container version.
-* `length` is the total length of the Binary glTF, including _header_ and all _chunks_, in bytes.
+* `length` is the total length of the Binary glTF, including _header_ and all _chunks_, in bytes. In binary format version 3, the most significant bit **MUST** be 0, which limits file sizes to 8 EiB (exbibytes).
 
 
 [[chunks]]
@@ -2733,7 +2749,9 @@ Client implementations that load GLB format **MUST** also check for the <<asset,
 [[chunks-overview]]
 ==== Overview
 
-Each chunk has the following structure:
+Each chunk has a header followed by a variable-length payload, with the header structure depending on the binary format version.
+
+For binary format version 2, each chunk has an 8-byte header followed by a variable-length payload:
 
 [source,c]
 ----
@@ -2742,11 +2760,22 @@ uint32 chunkType
 ubyte[] chunkData
 ----
 
-* `chunkLength` is the length of `chunkData`, in bytes.
+For binary format version 3, each chunk has a 16-byte header followed by a variable-length payload:
+
+[source,c]
+----
+uint32 chunkType
+uint32 chunkEncoding
+uint64 chunkLength
+ubyte[] chunkData
+----
+
 * `chunkType` indicates the type of chunk. See <<table-chunktypes>> for details.
+* `chunkEncoding` indicates the encoding method used for the chunk data. See <<chunk-encoding>> for details.
+* `chunkLength` is the length of `chunkData`, in bytes. In binary format version 3, the most significant bit **MUST** be 0, which limits chunk sizes to 8 EiB (exbibytes).
 * `chunkData` is the binary payload of the chunk.
 
-The start and the end of each chunk **MUST** be aligned to a 4-byte boundary. See chunks definitions for padding schemes. Chunks **MUST** appear in exactly the order given in <<table-chunktypes>>.
+In binary format version 2, the start and the end of each chunk **MUST** be aligned to a 4-byte boundary. In binary format version 3, the start of each chunk **MUST** be aligned to an 8-byte boundary, and the end of plainly encoded chunks **MUST** be aligned to an 8-byte boundary. The start of each chunk is the next byte-aligned boundary after the end of the previous chunk. See chunks definitions for padding schemes. Chunks **MUST** appear in exactly the order given in <<table-chunktypes>>.
 
 [[table-chunktypes]]
 .Chunk types
@@ -2754,7 +2783,7 @@ The start and the end of each chunk **MUST** be aligned to a 4-byte boundary. Se
 |====
 |    | Chunk Type | ASCII | Description             | Occurrences
 | 1. | 0x4E4F534A | JSON  | Structured JSON content | 1
-| 2. | 0x004E4942 | BIN   | Binary buffer           | 0 or 1
+| 2. | 0x004E4942 | BIN\0 | Binary buffer           | 0 or 1
 |====
 
 Client implementations **MUST** ignore chunks with unknown types to enable glTF extensions to reference additional chunks with new types following the first two chunks.
@@ -2773,7 +2802,7 @@ In a JavaScript implementation, the `TextDecoder` API can be used to extract the
 
 This chunk **MUST** be the very first chunk of a Binary glTF asset. By reading this chunk first, an implementation is able to progressively retrieve resources from subsequent chunks. This way, it is also possible to read only a selected subset of resources from a Binary glTF asset.
 
-This chunk **MUST** be padded with trailing `Space` chars (`0x20`) to satisfy alignment requirements.
+When plainly encoded, this chunk **MUST** be padded with trailing `Space` chars (`0x20`) to satisfy alignment requirements. When using a different encoding method, the padding scheme **MAY** be defined by the encoding method.
 
 
 [[binary-buffer]]
@@ -2783,9 +2812,24 @@ This chunk contains the binary payload for geometry, animation key frames, skins
 
 This chunk **MUST** be the second chunk of the Binary glTF asset.
 
-This chunk **MUST** be padded with trailing zeros (`0x00`) to satisfy alignment requirements.
+When plainly encoded, this chunk **MUST** be padded with trailing zeros (`0x00`) to satisfy alignment requirements. When using a different encoding method, the padding scheme **MAY** be defined by the encoding method.
 
 When the binary buffer is empty or when it is stored by other means, this chunk **SHOULD** be omitted.
+
+
+[[chunk-encoding]]
+==== Chunk Encoding
+
+In binary format version 3 only, between each chunk's type and size, the `chunkEncoding` field indicates the encoding method used for the chunk data, such as compression or encryption.
+
+The value `0x00000000` indicates that the chunk data is plainly encoded, meaning that it is not compressed or encrypted. Other values indicate that the chunk data is encoded with a specific method, such as compressed and/or encrypted. Alternate encoding schemes **SHOULD** be defined in glTF extensions, however such extensions are not required to be marked as used in the JSON chunk.
+
+Each chunk may use the same or a different encoding method compared to other chunks, as provided by the flexibility of this field being per-chunk. Additionally, since the file and chunk headers themselves are always encoded the same (never compressed or encrypted), this allows applications to read enough of the file to determine its overall layout even when the chunk contents cannot be read, ensuring that file identification utilities can still recognize the file as a Binary glTF asset.
+
+Client implementations **MUST** refuse to load chunks with unknown encoding methods, and **MUST** refuse to load binary glTF files whose JSON chunk is encoded with an unknown method.
+
+In binary format version 2, the `chunkEncoding` field is not present. All binary format version 2 chunks are plainly encoded, equivalent to `0x00000000` in binary format version 3.
+
 
 [[properties-reference]]
 = Properties Reference
