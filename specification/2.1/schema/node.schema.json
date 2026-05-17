@@ -23,6 +23,10 @@
             "uniqueItems": true,
             "minItems": 1
         },
+        "externalAsset": {
+            "allOf": [ { "$ref": "glTFid.schema.json" } ],
+            "description": "The index of the external glTF asset instantiated as this node."
+        },
         "skin": {
             "allOf": [ { "$ref": "glTFid.schema.json" } ],
             "description": "The index of the skin referenced by this node.",

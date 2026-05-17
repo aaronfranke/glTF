@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "externalAsset.schema.json",
+    "title": "glTF External Asset",
+    "type": "object",
+    "description": "An external glTF asset that references a `model/gltf-binary` or `model/gltf+json` media type file in the files array, may alter it, and may be referenced by scene nodes.",
+    "allOf": [ { "$ref": "glTFChildOfRootProperty.schema.json" } ],
+    "properties": {
+        "file": {
+            "allOf": [ { "$ref": "glTFid.schema.json" } ],
+            "description": "The index of the file in the glTF document's `files` array."
+        },
+        "extensions": { },
+        "extras": { },
+        "name": { },
+        "uid": { }
+    },
+    "required": ["file"]
+}

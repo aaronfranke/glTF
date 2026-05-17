@@ -72,6 +72,15 @@
             "minItems": 1,
             "gltf_detailedDescription": "An array of cameras.  A camera defines a projection matrix."
         },
+        "externalAssets": {
+            "type": "array",
+            "description": "An array of external glTF assets.",
+            "items": {
+                "$ref": "externalAsset.schema.json"
+            },
+            "minItems": 1,
+            "gltf_detailedDescription": "An array of external glTF assets.  An external asset references a `model/gltf-binary` or `model/gltf+json` media type file in the files array, may alter it, and may be referenced by scene nodes."
+        },
         "files": {
             "type": "array",
             "description": "An array of file references.",
