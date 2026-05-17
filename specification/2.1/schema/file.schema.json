@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "file.schema.json",
+    "title": "glTF File Reference",
+    "type": "object",
+    "description": "File data used as a resource in the glTF file. Files **MAY** be referenced by an URI (or IRI) or a buffer view index.",
+    "allOf": [ { "$ref": "glTFChildOfRootProperty.schema.json" } ],
+    "properties": {
+        "bufferView": {
+            "allOf": [ { "$ref": "glTFid.schema.json" } ],
+            "description": "The index of the bufferView that contains the file data. This field **MUST NOT** be defined when `uri` is defined."
+        },
+        "mimeType": {
+            "type": "string",
+            "description": "The file's media type. This field is required **MUST** be defined always."
+        },
+        "uri": {
+            "type": "string",
+            "description": "The URI (or IRI) of the file.",
+            "format": "iri-reference",
+            "gltf_detailedDescription": "The URI (or IRI) of the file.  Relative paths are relative to the current glTF asset.  Instead of referencing an external file, this field **MAY** contain a `data:`-URI. This field **MUST NOT** be defined when `bufferView` is defined.",
+            "gltf_uriType": "file"
+        },
+        "name": { },
+        "extensions": { },
+        "extras": { }
+    },
+    "oneOf": [
+        { "required": ["mimeType", "uri"] },
+        { "required": ["bufferView", "mimeType"] }
+    ]
+}

@@ -72,6 +72,15 @@
             "minItems": 1,
             "gltf_detailedDescription": "An array of cameras.  A camera defines a projection matrix."
         },
+        "files": {
+            "type": "array",
+            "description": "An array of file references.",
+            "items": {
+                "$ref": "file.schema.json"
+            },
+            "minItems": 1,
+            "gltf_detailedDescription": "An array of files.  A file reference defines external or embedded data which this glTF uses.  Images and buffers have their own dedicated arrays which SHOULD be preferred for those file types."
+        },
         "images": {
             "type": "array",
             "description": "An array of images.",

@@ -537,7 +537,7 @@ This is typically achieved with algorithms like Grisu2 used by common JSON libra
 [[uris]]
 == URIs
 
-glTF assets use <<uri,URIs>> or <<iri,IRIs>> to reference buffers and image resources. Assets **MAY** contain at least these two URI types:
+glTF assets use <<uri,URIs>> or <<iri,IRIs>> to reference buffers, files, image resources. Assets **MAY** contain at least these two URI types:
 
 - **Data URIs** that embed binary resources in the glTF JSON as defined by the <<data-uri,RFC 2397>>. The Data URI's `mediatype` field **MUST** match the encoded content.
 +
@@ -1823,7 +1823,9 @@ Each image contains one of
 
 - a URI (or IRI) to an external file in one of the supported image formats, or
 - a Data URI with embedded data, or
-- a reference to a `bufferView`; in that case `mimeType` **MUST** be defined.
+- a reference to a `bufferView`
+
+The `mimeType` property is required and **MUST** be defined for glTF 2.1 files. However, for compatibility with glTF 2.0, client implementations **MUST** also support the case when `mimeType` is undefined for images using the `uri` property.
 
 The following example shows an image pointing to an external PNG image file and another image referencing a `bufferView` with JPEG data.
 
@@ -1832,6 +1834,7 @@ The following example shows an image pointing to an external PNG image file and 
 {
     "images": [
         {
+            "mimeType": "image/png",
             "uri": "duckCM.png"
         },
         {
@@ -1842,7 +1845,7 @@ The following example shows an image pointing to an external PNG image file and 
 }
 ----
 
-Client implementations **MAY** need to manually determine the media type of some images. In such a case, the following table **SHOULD** be used to check the values of the first few bytes.
+Client implementations **MAY** need to manually determine the media type of some images when reading glTF 2.0 files. In such a case, the following table **SHOULD** be used to check the values of the first few bytes.
 
 [options="header"]
 |====
@@ -1851,7 +1854,7 @@ Client implementations **MAY** need to manually determine the media type of some
 | `image/jpeg` | 3              | `0xFF 0xD8 0xFF`
 |====
 
-The image data **MUST** match the `image.mimeType` property when the latter is defined.
+The image data **MUST** match the `image.mimeType` property.
 
 The origin of the texture coordinates (0, 0) corresponds to the upper left corner of a texture image. This is illustrated in the following figure, where the respective coordinates are shown for all four corners of a normalized texture space:
 
