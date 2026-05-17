@@ -9,7 +9,7 @@
         "input": {
             "allOf": [ { "$ref": "glTFid.schema.json" } ],
             "description": "The index of an accessor containing keyframe timestamps.",
-            "gltf_detailedDescription": "The index of an accessor containing keyframe timestamps. The accessor **MUST** be of scalar type with floating-point components. The values represent time in seconds with `time[0] >= 0.0`, and strictly increasing values, i.e., `time[n + 1] > time[n]`."
+            "gltf_detailedDescription": "The index of an accessor containing keyframe timestamps. The accessor **MUST** be of scalar type with floating-point components, with only 32-bit floats supported in the core specification. The values represent time in seconds with `time[0] >= 0.0`, and strictly increasing values, i.e., `time[n + 1] > time[n]`."
         },
         "interpolation": {
             "description": "Interpolation algorithm.",
@@ -35,7 +35,8 @@
         },
         "output": {
             "allOf": [ { "$ref": "glTFid.schema.json" } ],
-            "description": "The index of an accessor, containing keyframe output values."
+            "description": "The index of an accessor, containing keyframe output values.",
+            "gltf_detailedDescription": "The index of an accessor containing keyframe output values. The accessor **MUST** use a component type compatible with the property targeted by the animation channel, with the same number of elements as the input accessor."
         },
         "extensions": { },
         "extras": { }

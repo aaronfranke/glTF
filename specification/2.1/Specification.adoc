@@ -1027,18 +1027,23 @@ The following example shows two accessors, the first is a scalar accessor for re
 
 [options="header"]
 |====
-| `componentType` | Data Type | Signed | Bits
-| `5120` | _signed byte_ | Signed, two's complement | 8
-| `5121` | _unsigned byte_ | Unsigned | 8
-| `5122` | _signed short_ | Signed, two's complement | 16
-| `5123` | _unsigned short_ | Unsigned | 16
-| `5125` | _unsigned int_ | Unsigned | 32
-| `5126` | _float_ | Signed | 32
+| `componentType` | Data Type | Simple Name | Signed | Bits
+| `5120` | _signed byte_ | `int8` | Signed, two's complement | 8
+| `5121` | _unsigned byte_ | `uint8` | Unsigned | 8
+| `5122` | _signed short_ | `int16` | Signed, two's complement | 16
+| `5123` | _unsigned short_ | `uint16` | Unsigned | 16
+| `5124` | _signed int_ | `int32` | Signed, two's complement | 32
+| `5125` | _unsigned int_ | `uint32` | Unsigned | 32
+| `5126` | _float_ | `float32` | Signed | 32
+| `5130` | _double_ | `float64` | Signed | 64
+| `5131` | _half float_ | `float16` | Signed | 16
+| `5134` | _signed int64_ | `int64` | Signed, two's complement | 64
+| `5135` | _unsigned int64_ | `uint64` | Unsigned | 64
 |====
 
-Signed 32-bit integer components are not supported.
+The core glTF 2.1 specification defines all of the above component types. However, only a subset of these types are used in the core specification. Individual properties that reference accessors will define which component types are valid for that property, such as the table below for <<mesh-primitive-attributes,Mesh Primitive Attributes>>.
 
-Floating-point data **MUST** use <<ieee-754,IEEE-754>> single precision format.
+Floating-point data **MUST** use <<ieee-754,IEEE-754>> formats.
 
 Values of `NaN`, `+Infinity`, and `-Infinity` **MUST NOT** be present.
 
@@ -1307,6 +1312,8 @@ Valid accessor type and component type for each attribute semantic property are 
                                   _unsigned short_ normalized | See <<skinned-mesh-attributes,Skinned Mesh Attributes>>
 |====
 
+Signed integer components, unsigned integer sizes beyond 16 bits, and float sizes other than 32-bit are not supported for vertex attributes in the core glTF 2.1 specification. Extensions or future specification versions **MAY** allow additional component types.
+
 `POSITION` accessor **MUST** have its `min` and `max` properties defined.
 
 The W component of each `TANGENT` accessor element **MUST** be set to `1.0` or `-1.0`.
@@ -1320,6 +1327,8 @@ All components of each `COLOR_0` accessor element **MUST** be clamped to `[0.0, 
 Client implementations **SHOULD** support at least two texture coordinate sets, one vertex color, and one joints/weights set.
 
 All attribute accessors for a given primitive **MUST** have the same `count`. When `indices` property is not defined, attribute accessors' `count` indicates the number of vertices to render; when `indices` property is defined, it indicates the upper (exclusive) bound on the index values in the `indices` accessor, i.e., all index values **MUST** be less than attribute accessors' `count`.
+
+`indices` accessor **MUST NOT** use signed integer or floating-point component types. `indices` accessor **MUST** use one of _unsigned byte_, _unsigned short_, or _unsigned int_ component types in the core glTF 2.1 specification.
 
 `indices` accessor **MUST NOT** contain the maximum possible value for the component type used (i.e., 255 for unsigned bytes, 65535 for unsigned shorts, 4294967295 for unsigned ints).
 
@@ -1448,6 +1457,8 @@ Accessor type and component type for each morphed attribute semantic property **
                                     _unsigned byte_ normalized +
                                     _unsigned short_ normalized  | RGB or RGBA color deltas
 |====
+
+Integer sizes beyond 16 bits and float sizes other than 32-bit are not supported for morph attributes in the core glTF 2.1 specification. Extensions or future specification versions **MAY** allow additional component types.
 
 `POSITION` accessor **MUST** have its `min` and `max` properties defined.
 
@@ -1636,6 +1647,8 @@ The number of joints that influence one vertex is limited to 4 per set, so the r
 
 * *`JOINTS_n`*: _unsigned byte_ or _unsigned short_
 * *`WEIGHTS_n`*: _float_, or _normalized unsigned byte_, or _normalized unsigned short_
+
+Signed integer components, unsigned integer sizes beyond 16 bits, and float sizes other than 32-bit are not supported for joint indices and weights in the core glTF 2.1 specification. Extensions or future specification versions **MAY** allow additional component types.
 
 The joint weights for each vertex **MUST NOT** be negative.
 

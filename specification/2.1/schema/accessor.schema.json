@@ -21,38 +21,74 @@
         },
         "componentType": {
             "description": "The datatype of the accessor's components.",
-            "gltf_detailedDescription": "The datatype of the accessor's components.  UNSIGNED_INT type **MUST NOT** be used for any accessor that is not referenced by `mesh.primitive.indices`.",
-            "gltf_webgl": "`type` parameter of `vertexAttribPointer()`.  The corresponding typed arrays are `Int8Array`, `Uint8Array`, `Int16Array`, `Uint16Array`, `Uint32Array`, and `Float32Array`.",
+            "gltf_detailedDescription": "The datatype of the accessor's components.  The allowed component types **MUST** conform to the specifications of places that use the accessor, such as mesh primitive attributes, animation keyframe data, or morph target deltas.",
+            "gltf_webgl": "`type` parameter of `vertexAttribPointer()`.  The corresponding typed arrays are `Int8Array`, `Uint8Array`, `Int16Array`, `Uint16Array`, `Int32Array`, `Uint32Array`, `Float32Array`, `Float64Array`, `Float16Array`, `BigInt64Array`, and `BigUint64Array`.",
             "anyOf": [
                 {
                     "const": 5120,
                     "description": "BYTE",
-                    "type": "integer"
+                    "type": "integer",
+                    "gltf_detailedDescription": "8-bit signed integer (int8)."
                 },
                 {
                     "const": 5121,
                     "description": "UNSIGNED_BYTE",
-                    "type": "integer"
+                    "type": "integer",
+                    "gltf_detailedDescription": "8-bit unsigned integer (uint8)."
                 },
                 {
                     "const": 5122,
                     "description": "SHORT",
-                    "type": "integer"
+                    "type": "integer",
+                    "gltf_detailedDescription": "16-bit signed integer (int16)."
                 },
                 {
                     "const": 5123,
                     "description": "UNSIGNED_SHORT",
-                    "type": "integer"
+                    "type": "integer",
+                    "gltf_detailedDescription": "16-bit unsigned integer (uint16)."
+                },
+                {
+                    "const": 5124,
+                    "description": "INT",
+                    "type": "integer",
+                    "gltf_detailedDescription": "32-bit signed integer (int32)."
                 },
                 {
                     "const": 5125,
                     "description": "UNSIGNED_INT",
-                    "type": "integer"
+                    "type": "integer",
+                    "gltf_detailedDescription": "32-bit unsigned integer (uint32)."
                 },
                 {
                     "const": 5126,
                     "description": "FLOAT",
-                    "type": "integer"
+                    "type": "integer",
+                    "gltf_detailedDescription": "32-bit floating-point number (float32), IEEE 754 single-precision format (binary32)."
+                },
+                {
+                    "const": 5130,
+                    "description": "DOUBLE",
+                    "type": "integer",
+                    "gltf_detailedDescription": "64-bit floating-point number (float64), IEEE 754 double-precision format (binary64)."
+                },
+                {
+                    "const": 5131,
+                    "description": "HALF_FLOAT",
+                    "type": "integer",
+                    "gltf_detailedDescription": "16-bit floating-point number (float16), IEEE 754 half-precision format (binary16)."
+                },
+                {
+                    "const": 5134,
+                    "description": "INT64",
+                    "type": "integer",
+                    "gltf_detailedDescription": "64-bit signed integer (int64)."
+                },
+                {
+                    "const": 5135,
+                    "description": "UNSIGNED_INT64",
+                    "type": "integer",
+                    "gltf_detailedDescription": "64-bit unsigned integer (uint64)."
                 },
                 {
                     "type": "integer"
@@ -63,7 +99,7 @@
             "type": "boolean",
             "description": "Specifies whether integer data values are normalized before usage.",
             "default": false,
-            "gltf_detailedDescription": "Specifies whether integer data values are normalized (`true`) to [0, 1] (for unsigned types) or to [-1, 1] (for signed types) when they are accessed. This property **MUST NOT** be set to `true` for accessors with `FLOAT` or `UNSIGNED_INT` component type.",
+            "gltf_detailedDescription": "Specifies whether integer data values are normalized (`true`) to [0, 1] (for unsigned types) or to [-1, 1] (for signed types) when they are accessed. This property **MUST NOT** be set to `true` for accessors with a component type other than `BYTE`, `UNSIGNED_BYTE`, `SHORT`, or `UNSIGNED_SHORT`.",
             "gltf_webgl": "`normalized` parameter of `vertexAttribPointer()` "
         },
         "count": {
