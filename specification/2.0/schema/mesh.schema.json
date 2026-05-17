@@ -22,9 +22,10 @@
             },
             "minItems": 1
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "required": [ "primitives" ]
 }

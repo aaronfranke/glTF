@@ -125,9 +125,10 @@
             "allOf": [ { "$ref": "accessor.sparse.schema.json" } ],
             "description": "Sparse storage of elements that deviate from their initialization value."
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "dependencies": {
         "byteOffset": [ "bufferView" ]

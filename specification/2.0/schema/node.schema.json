@@ -79,9 +79,10 @@
                 "type": "number"
             }
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "dependencies": {
         "weights": [ "mesh" ],

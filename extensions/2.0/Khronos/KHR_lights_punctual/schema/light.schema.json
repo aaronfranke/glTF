@@ -54,9 +54,10 @@
             "minimum": 0,
             "exclusiveMinimum": true
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "required": [
         "type"

@@ -9,6 +9,11 @@
             "type": "string",
             "description": "The user-defined name of this object.",
             "gltf_detailedDescription": "The user-defined name of this object.  This is not necessarily unique, e.g., an accessor and a buffer could have the same name, or two accessors could even have the same name."
+        },
+        "uid": {
+            "type": "string",
+            "description": "The file unique ID of this object.",
+            "gltf_detailedDescription": "The file unique ID of this object. UIDs may be any string except for some disallowed characters."
         }
     }
 }

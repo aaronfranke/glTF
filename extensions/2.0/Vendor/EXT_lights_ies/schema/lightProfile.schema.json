@@ -26,9 +26,10 @@
             "allOf": [ { "$ref": "glTFid.schema.json" } ],
             "description": "The index of the bufferView that contains the IES light profile. This field **MUST NOT** be defined when `uri` is defined."
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "dependencies": {
         "bufferView": [ "mimeType" ]

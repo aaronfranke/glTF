@@ -56,9 +56,10 @@
             "description": "The dimension (in pixels) of the first specular mip. This is needed to determine, pre-load, the total number of mips needed.",
             "minimum": 1
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "required": [
         "irradianceCoefficients",

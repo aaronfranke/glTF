@@ -28,9 +28,10 @@
             ],
             "description": "The BSDF measurement's media type.  This field **MUST** be defined when `bufferView` is defined."
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "dependencies": {
         "bufferView": [ "mimeType" ]

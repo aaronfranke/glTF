@@ -623,8 +623,8 @@ Client implementations should first check whether a `minVersion` property is spe
 
 
 
-[[indices-and-names]]
-== Indices and Names
+[[indices]]
+== Indices
 
 Entities of a glTF asset are referenced by their indices in corresponding arrays, e.g., a `bufferView` refers to a `buffer` by specifying the buffer's index in `buffers` array.  For example:
 
@@ -651,7 +651,15 @@ In this example, `buffers` and `bufferViews` arrays have only one element each. 
 
 Indices **MUST** be non-negative integer numbers. Indices **MUST** always point to existing elements.
 
-Whereas indices are used for internal glTF references, optional _names_ are used for application-specific uses such as display. Any top-level glTF object **MAY** have a `name` string property for this purpose. These property values are not guaranteed to be unique as they are intended to contain values created when the asset was authored.
+
+[[names-and-unique-ids]]
+== Names and Unique IDs
+
+Optional _names_ are used for application-specific uses such as display. Any top-level glTF object **MAY** have a `name` string property for this purpose. These property values are not guaranteed to be unique as they are intended to contain values created when the asset was authored.
+
+Optional file-unique IDs (UIDs) **MAY** be added to a top-level glTF object with the `uid` string property. If present, these **MUST** be unique throughout the entire file, and **MUST NOT** share a value with any other `uid` or `name` in the file, except that the same object **MAY** have the same string for both `name` and `uid`. Unique IDs **MUST NOT** contain the following characters: `"`, `#`, `.`, `:`, `@`, `{`, `}`, `[`, `]`, `/`, literal backslashes, or any control characters.
+
+Whereas indices are used for internal glTF references, unique IDs may be used for externally referencing objects in glTF files in a stable and unambiguous way. Such external references are exact case-sensitive matches. Additionally, if the `name` property conforms to all of the requirements of UIDs (uniqueness and character set), then the `name` property **MAY** be used as a fallback when the requested `uid` does not exist in the file. This allows glTF 2.0 files to have their objects referred to externally, as well as glTF 2.1+ files generated without UIDs.
 
 For property names, glTF usually uses camel case, `likeThis`.
 

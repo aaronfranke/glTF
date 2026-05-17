@@ -115,8 +115,9 @@
                 }
             ]
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     }
 }

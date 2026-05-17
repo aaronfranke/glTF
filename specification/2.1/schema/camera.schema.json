@@ -29,9 +29,10 @@
                 }
             ]
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "required": [ "type" ],
     "not": {

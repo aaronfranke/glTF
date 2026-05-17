@@ -49,9 +49,10 @@
                 }
             ]
         },
-        "name": { },
         "extensions": { },
-        "extras": { }
+        "extras": { },
+        "name": { },
+        "uid": { }
     },
     "required": [ "buffer", "byteLength" ]
 }
